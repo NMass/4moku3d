@@ -28,6 +28,6 @@ module.exports = class Board {
                 return 1;
             }
         }
-        return -1;
+        return 0;
     }
 }
