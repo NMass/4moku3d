@@ -2,8 +2,8 @@
 
 const express = require('express');
 const Board = require('./entity/Board');
-const Enemy = require('./survice/Enemy');
-const Judge = require('./survice/Judge');
+const Enemy = require('./service/Enemy');
+const Judge = require('./service/Judge');
 
 const gameBoard = new Board();
 const gameEnemy = new Enemy();
@@ -22,7 +22,7 @@ app.get('/', (request, response) => {
 
 //APIHandlers
 app.get('/api/get/board', (req, res) => {
-    res.send(gameBoard.showBoard());
+    res.send(JSON.stringify(gameBoard.showBoard()));
 });
 
 app.post('/api/put/stone', (req, res) => {
@@ -36,7 +36,7 @@ app.post('/api/put/stone', (req, res) => {
             if(judge_enemy !== 0) {
                 res.send(judge_enemy);
             }else {
-                res.send(gameBoard.showBoard());
+                res.send(JSON.stringify(gameBoard.showBoard()));
             }
         }
     }else {

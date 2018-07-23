@@ -2,10 +2,62 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.js"></script>
         <title>4MOKUNARABE</title>
     </head>
 
     <body>
-
+        <div class="play-board" id="board"></div>
+        <div class="player-console">
+            <div class="console">
+                <h2>3D4MOKUNARABE</h2>
+                <h2 id="result">Choice your position!</h2>
+            </div>
+            <div class="player-command">
+                <input class="button" type="button" value="1" onclick="commandInput(1)">
+                <input class="button" type="button" value="2" onclick="commandInput(2)">
+                <input class="button" type="button" value="3" onclick="commandInput(3)">
+                <input class="button" type="button" value="4" onclick="commandInput(4)">
+                <br>
+                <input class="button" type="button" value="5" onclick="commandInput(5)">
+                <input class="button" type="button" value="6" onclick="commandInput(6)">
+                <input class="button" type="button" value="7" onclick="commandInput(7)">
+                <input class="button" type="button" value="8" onclick="commandInput(8)">
+                <br>
+                <input class="button" type="button" value="9" onclick="commandInput(9)">
+                <input class="button" type="button" value="10" onclick="commandInput(10)">
+                <input class="button" type="button" value="11" onclick="commandInput(11)">
+                <input class="button" type="button" value="12" onclick="commandInput(12)">
+                </br>
+                <input class="button" type="button" value="13" onclick="commandInput(13)">
+                <input class="button" type="button" value="14" onclick="commandInput(14)">
+                <input class="button" type="button" value="15" onclick="commandInput(15)">
+                <input class="button" type="button" value="16" onclick="commandInput(16)">
+            </div>
+        </div>
+        <script src="./index.js"></script>
+        <style>
+        .button {
+            background-color: #333;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+        }
+        .button:hover {
+            background-color: #59b1eb;
+            width: 60px;
+            height: 60px;
+        }
+        .player-console {
+            display: inline-block;
+        }
+        .play-board {
+            display: inline-block;
+        }
+        .console {
+            text-align: center;
+        }
+        </style>
     </body>
 </html>
