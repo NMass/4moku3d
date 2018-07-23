@@ -8,6 +8,9 @@ UPDATE:   2018/7/9
 
 let slider;
 let board;
+let layer = 0;
+
+getBoard();
 
 function getBoard() {
     const request = new XMLHttpRequest();
@@ -18,18 +21,12 @@ function getBoard() {
 
 function commandInput(userCommand) {
     const request = new XMLHttpRequest();
-    request.open("post", 'http://127.0.0.1:3000/api/put/stone', false);
-    request.send(userCommand-1);
+    request.open("get", 'http://127.0.0.1:3000/api/put/stone/'+String(userCommand-1), false);
+    request.send(null);
+    console.log(request.responseText);
     const res = JSON.parse(request.responseText);
     if(Array.isArray(res)){
-        if(res.findIndex(function(element, index, array) { return element.indexOf(0) >= 0; })){
-            board = res;
-        }else{
-            let doc = document.getElementById("result");
-            doc.style.color = 'red';
-            doc.innerText = 'DRAW!';
-            board = res;
-        }
+        board = res;
     }else{
         getBoard();
         let doc = document.getElementById("result");
@@ -44,42 +41,41 @@ function commandInput(userCommand) {
 }
 
 function updateBoard(board, layer) {
-    clear();
+    const map = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]];
     let grid = 0;
-    for(let y=0; y <= 3; y++){
-        for(let x=0; x <= 3; x++){
-            if(board && layer){
-                if(board[layer][grid] == 1) {
+    while(grid < 4){
+        for(let y=0; y < 4; y++){
+            for(let x=0; x < 4; x++){
+                if(board[layer][map[y][x]] == 1) {
                     fill('#bfbfbf');
-                    ellipse((x+1)*80, (y+1)*80, 80, 80);
-                }else if(board[layer][grid] == 2) {
+                    ellipse((x+1)*80, (y+1)*80, 80, 80,1);
+                }else if(board[layer][map[y][x]] == 2) {
                     fill('#222222');
-                    ellipse((x+1)*80, (y+1)*80, 80, 80);
+                    ellipse((x+1)*80, (y+1)*80, 80, 80,1);
                 }else {
-                    ellipse((x+1)*80, (y+1)*80, 80, 80);
+                    fill('#FFFFFF');
+                    ellipse((x+1)*80, (y+1)*80, 80, 80,1);
                 }
-            }else {
-                ellipse((x+1)*80, (y+1)*80, 80, 80);
             }
-            grid++;
         }
+        grid++;
     }
 }
 
 function setup() {
     const canvas = createCanvas(500, 420);
     canvas.parent("board");
-    slider = createSlider(0, 4, 0, 1);
+    slider = createSlider(0, 3, 0, 1);
     slider.position(40, 420);
     slider.style('width', '330px');
-    for(let y=0; y <= 3; y++){
-        for(let x=0; x <= 3; x++){
-            ellipse((x+1)*80, (y+1)*80, 80, 80);
+    for(let y=0; y < 4; y++){
+        for(let x=0; x < 4; x++){
+            ellipse((x+1)*80, (y+1)*80, 80, 80,0);
         }
     }
 }
 
 function draw() {
-    let layer = slider.value();
+    layer = slider.value();
     updateBoard(board, layer);
 }

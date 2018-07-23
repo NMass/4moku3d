@@ -1,12 +1,14 @@
 'use strict';
 
-const Enemy = require('./service/Enemy');
-const Board = require('./entity/Board');
+const Enemy = require('../service/Enemy');
+const Board = require('../entity/Board');
 
 const gameBoard = new Board();
 const gameEnemy = new Enemy();
 
 gameBoard.inputBoard(1, 11);
-console(gameBoard.showBoard());
-gameBoard.inputBoard(2, gameEnemy.select(gameBoard.showBoard()));
-console(gameBoard.showBoard());
+console.log(gameBoard.showBoard());
+let board = JSON.parse(JSON.stringify(gameBoard.showBoard()));
+console.log(gameEnemy.select(board));
+gameBoard.inputBoard(2, gameEnemy.select(board));
+console.log(gameBoard.showBoard());

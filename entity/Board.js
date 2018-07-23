@@ -8,12 +8,7 @@ UPDATE:   2018/7/9
 
 module.exports = class Board {
     constructor() {
-        let board = new Array(4);
-        for(let depth of board) {
-            depth = new Array(16);
-            for(let cell of depth) {cell = 0;}
-        }
-        this.board = board;
+        this.board = Array.apply(null, Array(4)).map(() => Array(16).fill(0));
     }
 
     showBoard() {

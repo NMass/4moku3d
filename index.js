@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const router = express.Router();
 const Board = require('./entity/Board');
 const Enemy = require('./service/Enemy');
 const Judge = require('./service/Judge');
@@ -16,23 +17,28 @@ const server = app.listen((process.env.PORT || 3000), () => {
 });
 
 //WebPageHandlers
-app.get('/', (request, response) => {
+app.use('/', router);
+
+router.get('/', (request, response) => {
     response.sendFile(__dirname + '/ui/main.html');
 });
 
 //APIHandlers
-app.get('/api/get/board', (req, res) => {
+router.get('/api/get/board', (req, res) => {
     res.send(JSON.stringify(gameBoard.showBoard()));
 });
 
-app.post('/api/put/stone', (req, res) => {
-    if(gameBoard.inputBoard(1, req.body.place)) {
+router.get('/api/put/stone/:place', (req, res) => {
+    if(gameBoard.inputBoard(1, req.params.place)) {
         const judge_player = Judge.judgement(gameBoard.showBoard());
+        console.log(judge_player);
         if(judge_player !== 0){
             res.send(judge_player);
         }else {
-            gameBoard.inputBoard(2, gameEnemy.select(gameBoard.showBoard()));
+            let board = JSON.parse(JSON.stringify(gameBoard.showBoard()));
+            gameBoard.inputBoard(2, gameEnemy.select(board));
             const judge_enemy = Judge.judgement(gameBoard.showBoard());
+            console.log(judge_enemy);
             if(judge_enemy !== 0) {
                 res.send(judge_enemy);
             }else {
