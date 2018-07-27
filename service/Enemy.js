@@ -88,6 +88,7 @@ module.exports = class Enemy {
 
         this.lineList = lineList;
         this.stoneLine = stoneLine;
+
 	}
 
 
@@ -97,6 +98,8 @@ module.exports = class Enemy {
         CPU側の次の手を返す
         return hoge => 次の手(ここではhoge)を返す
         ---------------*/
+
+
         let boardCount = (new Array(16)).fill(0);
 	    let legal = (new Array(16)).fill(0);
 	    for(let i = 0; i < 4; i++) {
@@ -142,7 +145,7 @@ module.exports = class Enemy {
         //満たすなら即座にその手を0~15で返して終了
 	    for(let i = 0;i < 16; i++) {
             if(legal[i] === true){
-                let instBoard = board;
+                let instBoard = JSON.parse(JSON.stringify(board));
                 instBoard[i][boardCount[i]] = 2;
                 //ジャッジに投げる
                 //自分が勝ちならその手
@@ -165,13 +168,14 @@ module.exports = class Enemy {
 	    let minPoint = 1000;
         let maxPoint = -100;
         let point = 0;
-        let instBoard = board;
-        let nowBoardCount = boardCount;
+        let instBoard = board.slice();
+        let nowBoardCount = boardCount.slice();
 
         for(let i = 0; i < 16; i++) {
             for(let j = 0; j < 16; j++){
                 point = 0;
-                nowBoardCount = boardCount;
+		instBoard =JSON.parse(JSON.stringify(board));
+                nowBoardCount = JSON.parse(JSON.stringify(boardCount));
                 if(nowBoardCount[i] === 4) {
                     point = -1000;
                 }else {
@@ -201,6 +205,7 @@ module.exports = class Enemy {
         }
 	    let hand = (new Array(16)).fill(0);
 	    for(let i = 0; i < 16; i++) {
+		minPoint=100000
 		    for(let j = 0; j < 16; j++) {
                 if(minPoint > pointList[i][j]) {
                     minPoint = pointList[i][j];
@@ -209,12 +214,27 @@ module.exports = class Enemy {
             }
         }
         let fin;
+	maxPoint=-10000
         for(let i = 0; i < 16; i++) {
+
+//hand[i]+=Math.floor(Math.random()*10);
+hand[i]-=boardCount[i];
             if(maxPoint < hand[i]) {
                 maxPoint = hand[i];
                 fin = i;
             }
         }
+
+
+console.log(nowBoardCount);
+console.log(boardCount);
+console.log(instBoard);
+console.log(board);
+console.log(fin);
+console.log(pointList);
+console.log(hand);
+
         return fin;
+
     }
 }
