@@ -97,6 +97,10 @@ module.exports = class Enemy {
         CPU側の次の手を返す
         return hoge => 次の手(ここではhoge)を返す
         ---------------*/
+
+
+console.log(board);
+
         let boardCount = (new Array(16)).fill(0);
 	    let legal = (new Array(16)).fill(0);
 	    for(let i = 0; i < 4; i++) {
@@ -142,7 +146,7 @@ module.exports = class Enemy {
         //満たすなら即座にその手を0~15で返して終了
 	    for(let i = 0;i < 16; i++) {
             if(legal[i] === true){
-                let instBoard = board;
+                let instBoard = board.slice();
                 instBoard[i][boardCount[i]] = 2;
                 //ジャッジに投げる
                 //自分が勝ちならその手
@@ -165,13 +169,21 @@ module.exports = class Enemy {
 	    let minPoint = 1000;
         let maxPoint = -100;
         let point = 0;
-        let instBoard = board;
-        let nowBoardCount = boardCount;
+        let instBoard = board.slice();
+        let nowBoardCount = boardCount.slice();
 
         for(let i = 0; i < 16; i++) {
+
+console.log(instBoard);
+console.log(board);
+
+
+//何故かこのループでboardが書き換わってる
+
             for(let j = 0; j < 16; j++){
                 point = 0;
-                nowBoardCount = boardCount;
+		instBoard = board.slice();
+                nowBoardCount = boardCount.slice();
                 if(nowBoardCount[i] === 4) {
                     point = -1000;
                 }else {
@@ -215,6 +227,17 @@ module.exports = class Enemy {
                 fin = i;
             }
         }
+
+
+console.log(nowBoardCount);
+console.log(boardCount);
+console.log(instBoard);
+console.log(board);
+console.log(fin);
+//console.log(pointList);
+console.log(hand);
+
         return fin;
+
     }
 }
