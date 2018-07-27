@@ -99,7 +99,7 @@ module.exports = class Judge {
 
         for (let depth = 0; depth < 4; depth++) {
             for (let cell = 0; cell < 16; cell++) {
-                if(board[depth][cell] !== 0){
+                if(board[depth][cell] != 0){
                     for (let i of lineList) {
                         if(i[0] === (depth*16 + cell)){
                             let stone = board[Math.floor(i[0]/16)][i[0]%16];
@@ -109,14 +109,13 @@ module.exports = class Judge {
                                     count++;
                                 }
                             }
-                            if(count === 3)
-                                return stone;
-                            else
-                                return 0;
+                            if(count === 3) return stone;
                         }
                     }
                 }
             }
         }
+
+        return 0;
     }
 };

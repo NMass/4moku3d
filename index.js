@@ -33,14 +33,14 @@ router.get('/api/put/stone/:place', (req, res) => {
         const judge_player = Judge.judgement(gameBoard.showBoard());
         console.log(judge_player);
         if(judge_player !== 0){
-            res.send(judge_player);
+            res.send(JSON.stringify(judge_player));
         }else {
             let board = JSON.parse(JSON.stringify(gameBoard.showBoard()));
             gameBoard.inputBoard(2, gameEnemy.select(board));
             const judge_enemy = Judge.judgement(gameBoard.showBoard());
             console.log(judge_enemy);
             if(judge_enemy !== 0) {
-                res.send(judge_enemy);
+                res.send(JSON.stringify(judge_enemy));
             }else {
                 res.send(JSON.stringify(gameBoard.showBoard()));
             }

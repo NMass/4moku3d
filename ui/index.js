@@ -23,11 +23,11 @@ function commandInput(userCommand) {
     const request = new XMLHttpRequest();
     request.open("get", 'http://127.0.0.1:3000/api/put/stone/'+String(userCommand-1), false);
     request.send(null);
-    console.log(request.responseText);
     const res = JSON.parse(request.responseText);
     if(Array.isArray(res)){
         board = res;
     }else{
+        console.log(request.responseText);
         getBoard();
         let doc = document.getElementById("result");
         doc.style.color = 'red';
