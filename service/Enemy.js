@@ -109,9 +109,9 @@ module.exports = class Enemy {
                 }
 
                 if( boardCount[j] != 4 ){
-                    legal[i] = true;
+                    legal[j] = true;
                 }else{
-                    legal[i] = false;
+                    legal[j] = false;
                 }
             }
 		}
@@ -232,10 +232,7 @@ module.exports = class Enemy {
         }
         let fin;
 	maxPoint=-10000
-        for(let i = 0; i < 16; i++) {
 
-hand[i]+=Math.floor(Math.random()*3);
-hand[i]-=boardCount[i]*16;
 	hand[0]+=1;
 	hand[3]+=1;
 	hand[12]+=1;
@@ -245,6 +242,11 @@ hand[i]-=boardCount[i]*16;
 	hand[6]+=2;
 	hand[9]+=2;
 	hand[10]+=2;
+
+        for(let i = 0; i < 16; i++) {
+
+hand[i]+=Math.floor(Math.random()*3);
+hand[i]-=boardCount[i];
             if(maxPoint < hand[i] && legal[i]===true ) {
                 maxPoint = hand[i];
                 fin = i;
@@ -252,10 +254,11 @@ hand[i]-=boardCount[i]*16;
         }
 
 
-console.log(nowBoardCount);
+//console.log(nowBoardCount);
 console.log(boardCount);
-console.log(instBoard);
-console.log(board);
+//console.log(instBoard);
+//console.log(board);
+console.log(legal);
 console.log(fin);
 console.log(pointList);
 console.log(hand);
